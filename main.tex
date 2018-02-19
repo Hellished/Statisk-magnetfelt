@@ -1,0 +1,256 @@
+% *** LaTeX-mal for labrapporter i fysikk, v.01.11.2011 ***
+
+% Dette er et eksempel på et LaTeX-dokument, og du kan bruke dette som et utgangspunkt for 
+% din egen rapport. Hvis du bruker Windows, anbefaler vi å bruke enten Texmaker eller TeXnicCenter når du 
+% arbeider med dokumentet. I UNIX kan du bruke f.eks. Texmaker, Kile eller Emacs. Merk at for å kunne typesette dokumentet uten feil, 
+% må du også laste ned filen pendel.pdf.
+%
+% Her i starten og videre nedover i teksten under har vi lagt inn en god del linjer som starter med
+% tegnet "%". Alt som kommer etter et slikt tegn på den linja er kommentarer og vil ikke synes i den 
+% ferdige teksten. Vi bruker det for å forklare ting underveis. 
+
+% Først må vi definere noen ting for dokumentet:
+\documentclass[5p]{elsarticle}	            	% 5p gir 2 kolonner pr side. 1p gir 1 kolonne pr side.
+\journal{Veileder}
+\usepackage[T1]{fontenc} 			        	% Vise norske tegn.
+\usepackage[norsk]{babel}                       % Tilpasning til norsk.
+\usepackage[utf8]{inputenc}                     % Norske bokstaver
+\usepackage{graphicx}       		      		% For å inkludere figurer.
+\usepackage{amsmath,amssymb} 		      		% Ekstra matematikkfunksjoner.
+\usepackage{siunitx}	% Må inkluderes for blant annet å få tilgang til kommandoen \SI (korrekte måltall med enheter)
+	\sisetup{exponent-product = \cdot}      	% Prikk som multiplikasjonstegn (i steden for kryss).
+ 	\sisetup{output-decimal-marker  =  {,}} 	% Komma som desimalskilletegn (i steden for punktum).
+ 	\sisetup{separate-uncertainty = true}   	% Pluss-minus-form på usikkerhet (i steden for parentes). 
+\usepackage{booktabs}                     		% For å få tilgang til finere linjer (til bruk i tabeller og slikt).
+\usepackage[font=small,labelfont=bf]{caption}	% For justering av figurtekst og tabelltekst.
+\usepackage{mathtools}
+
+% Denne setter navnet på abstract til Sammendrag
+\renewenvironment{abstract}{\global\setbox\absbox=\vbox\bgroup
+\hsize=\textwidth\def\baselinestretch{1}%
+\noindent\unskip\textbf{Sammendrag}
+\par\medskip\noindent\unskip\ignorespaces}
+{\egroup}
+
+
+% Disse kommandoene kan gjøre det enklere for LaTeX å plassere figurer og tabeller der du ønsker.
+\setcounter{totalnumber}{5}
+\renewcommand{\textfraction}{0.05}
+\renewcommand{\topfraction}{0.95}
+\renewcommand{\bottomfraction}{0.95}
+\renewcommand{\floatpagefraction}{0.35}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+\begin{frontmatter}
+
+
+\title{Statisk Magnetfelt}
+
+\author[fysikk]{I.H. Nyhus}
+\author[fysikk]{M.N. Paulsen}
+\address[fysikk]{Institutt for fysikk, Norges Teknisk-Naturvitenskapelige Universitet, N-7491 Trondheim, Norway.}
+
+\begin{abstract}
+Her skriver  du et sammendrag av rapporten. Sammendraget skal være veldig kort
+men må inneholde svaret på tre spørsmål: 1. Hva gjorde du (hva målte du)? 2. Hvordan 
+gjorde du det (hvilken metode)? 3. Hva fant du (resultat)?
+\end{abstract}
+
+\end{frontmatter}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Innledning}
+Nå begynner den egentlige rapporten. Se kapittel 8 i lab\-heftet \cite{labhefte} for hva de enkelte delene skal inneholde. Dersom vi vil referere til kilder, kan vi gjøre det som vist ovenfor. Referanselisten kommer til slutt i rapporten.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Teori}
+Her kommer et eksempel på et par ligninger og hvordan vi kan referere til dem.
+
+Svingetiden til en rektangulær pendel med uniform massefordeling kan uttrykkes som 
+\begin{equation}
+	T = 2\pi \sqrt {\frac{ r^2  + h^2 }{ gh } },
+	\label{svingetid} % Labelen er det vi må huske når vi senere skal referere til ligningen.
+\end{equation}
+der $g$ er tyngdens akselerasjon og $h$ er avstanden fra opphengningspunktet til massemiddelpunktet. Treghetsradien $r$ er gitt ved
+\begin{equation}
+	r = \sqrt {\frac{ l^2  + b^2 }{12} },
+	\label{treghetsradius}
+\end{equation}
+der $l$ er lengden og $b$ er bredden til pendelen.
+
+% Legg merke til at alle symbolene i ligningen står i kursiv. Bokstaver vil alltid stå i 
+% kursiv når vi er i matematikkmodus. I et tekstavsnitt kan vi stille om til mattemodus ved å bruke
+% dollartegn "$" som vi har gjort for tyngdeakselerasjonen g osv. i avsnittet over.
+
+Disse ligningene kan vi nå henvise til, for eksempel kan vi si at vi skal bruke 
+\eqref{svingetid} til å måle tyngdeakselerasjonen $g$.
+
+% Merk at ligningsreferanser alltid skal være omsluttet av parenteser, og det ordnes automatisk
+% når vi bruker kommandoen "\eqref{}". Hvis man ønsker en referanse uten parenteser, bruker man 
+% kommandoen "\ref{}". Her kunne vi altså også ha skrevet "(\ref{svingetid})" 
+% (men hvorfor gjøre det vanskelig?).
+
+Noen ganger trenger vi litt større oppstillinger av ligninger som går over flere linjer, og de kan se ut for eksempel som dette:
+\begin{align}
+	\left( \frac{\Delta r}{r} \right)^2 &= \left( \frac{1}{r} \frac{\partial r}{\partial l} \Delta l \right)^2 + \left( \frac{1}{r} \frac{\partial r}{\partial b} \Delta b \right)^2 \nonumber \\
+		&=  \left( \frac{l \Delta l}{l^2 + b^2} \right)^2 + \left(\frac{b \Delta b}{l^2 + b^2} \right)^2.
+\end{align}
+
+% Her har vi brukt align-miljøet til å sette ligningen opp over flere linjer. 
+% Vi justerer likhetstegnene horisontalt ved å sette symbolet & foran dem.
+% Kommandoen \\ brukes til å skifte linje. (Denne kan også brukes ellers i LaTeX, 
+% men det anbefales som regel ikke. For å sørge for at bare en av linjene får 
+% ligningsnummer, bruker vi kommandoen \nonumber for den første linjen.
+
+% I tillegg kan du legge merke til at vi har avsluttet ligningene ovenfor med komma eller
+% punktum alt ettersom hva som passer for setningen som ligningene er en del av.
+
+Noen ganger ønsker vi kanskje ikke ligningsnummer i det hele tatt. 
+% (Men generelt ønsker vi at alle ligninger skal ha et ligningsnummer.)
+For eksempel vil vi nå kommentere i forbifarten at dersom $(l \Delta l)^2 \gg (b \Delta b)^2$ så får vi
+\begin{equation*}
+	\frac{\Delta r}{r} \approx \frac{\Delta l}{l}.
+\end{equation*}
+
+Med det samme nevner vi at vi kan få bruk for subskript for å angi variabelnavn, for eksempel for å skille mellom $l_1$ og $l_2$. Dersom subskriptet er et ord og ikke en indeks, må vi skrive variabelnavnet som for eksempel $l_\text{meterstav}$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Metode og apparatur}
+
+Her er vist et eksempel på en figur som vi henter inn fra en fil i PDF-format.
+
+\begin{figure}[htb] 
+% Alternativene inne i klammene angir hvilke av følgende plasseringer du vil tillate:
+% h = here, t = top, b = bottom, p = separat, ! = forsøk å overstyre preferansene til LaTeX.
+% (Preferansene til LaTeX gjør noen ganger at figurer ikke havner der du selv mener de passer best...).
+  \begin{center}
+      \includegraphics[width=0.3\textwidth]{pendel}  % Putter inn fila pendel.pdf
+%   Hvis du angir bare enten width eller height, beholdes originalfigurens proporsjoner. (Dette anbefales.)
+% 	Her har vi brukt width=0.3\textwidth for å angi figurbredde som en andel av den delen av arkbredden som inneholder tekst.
+  \end{center}
+  \caption{Her skriver du figurteksten. Merk at denne kommer under figuren. Naturligvis avslutter vi figurteksten med punktum, og det gjelder selv om den inneholder bare én setning eller til og med bare ett ord.}
+  \label{MinLilleFigur} % Som med ligningen, er dette navnet vi refererer til.
+\end{figure}
+
+Vi kan referere til figurer på samme måte som vi refererer til ligninger. Nå refererer vi til 
+figur \ref{MinLilleFigur}.
+% Legg merke til at nå bruker vi \ref{} og ikke \eqref{}. Figurreferansen skal ikke ha parenteser rundt seg.
+
+%\clearpage % Bruk denne kommandoen dersom du vil ha ny side etter det er satt plass til figuren.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Resultat og diskusjon}
+
+Ofte vil vi skrive inn enkeltmålinger i resultatdelen, som at vi måler lengden til pendelen til å være\\ $l = \SI{1000,015(5)}{\milli\metre}$. 
+% Her har vi brukt kommandoen \SI fra siunitx-pakken for å presentere måltall og enheter på en 
+% typografisk korrekt måte. Andre kommandoer er \num for (bare) tall og \si for (bare) enheter. For mer avansert bruk kan du søke opp "siunitx".
+% Legg spesielt merke til hvordan man skriver usikkerheten, og hvordan denne kommer frem i den kompilerte pdfen. 
+Kanskje vil vi skrive opp usikkerheten separat, som her er $\Delta l = \SI{5e-6}{\metre}$.
+Alternativt kunne vi skrevet denne usikkerheten som $\Delta l = \SI{5}{\micro \metre}$.
+
+I denne delen har dere ofte bruk for tabeller. Her kommer et eksempel på en slik.
+%
+% Denne kan være litt vanskelig å forstå, men hvis du 
+% studerer eksempelet nøye, blir det forhåpentligvis litt klarere.
+%
+\begin{table}[htb]
+	\begin{center}
+		\caption{Dette er den obligatoriske tabellteksten. Den kommer over tabellen.}
+		\label{MinLilleTabell}	% Merkelappen vi vil referere til.
+		\vspace{0.5cm}					% Litt ekstra plass for å få det til å se penere ut.
+		\begin{tabular}{lll} 		% Tre venstrejusterte kolonner (l = left, c = center, r = right).
+			\hline 								% Horisontal linje.
+			$h$  &  $T$  & $g$  \\  			% Merk symboler i kursiv, (men det er fordi de er symboler, ikke fordi de er kolonneoverskrifter!)
+			(\si{\centi\metre}) &  (\si{\second}) & (\si{\metre\per\second\squared})\\ % mens enheter ikke er det.
+			\hline												
+			20   &  1,5744 & 9,836 \\
+			23   &  1,5421 & 9,847 \\
+			29   &  1,5229 & 9,839 \\
+			33   &  1,5295 & 9,840 \\
+			40   &	1,5637 & 9,829 \\
+			\hline
+		\end{tabular}
+	\end{center}
+\end{table}
+% Litt ekstra forklaring av tabellen til slutt:
+% Du skiller altså kolonnene med tegnet "&", og du setter inn linjeskift med "\\".
+% (Dersom du får problemer med at kommaene ikke flukter i kolonnen, se kap. 8.3.1 i labheftet, eller bruk f.eks. pakken siunitx.)
+% De horisontale linjene er plassert ifølge standarden du etterhvert bør ha begynt å bli vant til.
+
+
+Tabeller (som tabell \ref{MinLilleTabell}) kan selvfølgelig også refereres til. Merk at mens figurtekster står under figuren skal tabelltekst plasseres 
+over tabellen.
+
+%Her er en typografisk mer elegant tabell, basert på en spesiell tabellform som kommer med siunitx-pakken:
+\begin{table}[htb]%
+\centering
+\caption{Denne tabellen har identisk innhold som den forrige, men er laget på en litt annen måte.}
+	\label{MinLilleTabell2}	% Merkelappen vi vil referere til.
+	\begin{tabular}{SSS} 		% S = spesielt kolonneformat håndtert av siunitx.
+		\toprule
+		{$h$}  &  {$T$}  & {$g$}  \\
+		{(\si{\centi\metre})} &  {(\si{\second})} & {(\si{\metre\per\second\squared})}  \\
+		\midrule
+		20 & 1,5744 & 9,836 \\
+		23 & 1,5421 & 9,847 \\
+		29 & 1,5229 & 9,839 \\
+		33 & 1,5295 & 9,840 \\
+		40 & 1,5637 & 9,829 \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Konklusjon}
+Vi har gitt dere eksempel på noen ligninger, 
+en figur og en tabell.
+Nå er det din tur -- lykke til!
+
+
+% Her kommer referanselisten. Dersom du ønsker flere enn noen få referanser, kan det lønne seg å 
+% søke opp "BibTeX" og sette seg litt inn i det. 
+\begin{thebibliography}{99}	% Denne referanselisten kan ikke ha flere enn 99 referanser.
+
+\bibitem{labhefte}					% I klammeparentes angir vi merkelapp for de ulike oppføringene i listen.
+E. V. Herland, I. B. Sperstad, K. Gjerden, M. H. Farstad, T. A. Bojesen, A. G. Gjendem og T. B. Melø. Laboratorium i emnene TFY4145 Mekanisk fysikk, FY1001 Mekanisk fysikk, NTNU,  2011.
+
+\end{thebibliography}
+
+
+
+\begin{equation}
+	d\Vec{B} = {\frac{\mu_0}{4\pi}} {\frac{Id\Vec{S} \times \hat{r}}{r^2}},\label{biot} 
+\end{equation}
+
+\begin{equation}
+	\Vec{B}(\Vec{r}) = {\frac{\mu_0 I}{4\pi}
+	{\frac{Id\Vec{S} \times \hat{r}}{r^2}}},\label{biot}
+\end{equation}
+
+\begin{equation}
+	B_x = {\frac{\mu_0 I}{4\pi}} {\frac{2\pi\xi^2}{\left(x^2+\xi^2\right)^{3/2}}} = {\frac{\mu_0 I}{2\xi} \left(1-\frac{x^2}{\xi^2}\right)^{-3/2}},\label{biot} 
+\end{equation}
+
+\begin{equation}
+	B(x) = {\frac{N \mu_0 I}{2R}}\left(1-\frac{x^2}{R^2}\right)^{-3/2}
+	,\label{biot} 
+\end{equation}
+
+\begin{equation}
+	B_x(x) = {\frac{N \mu_0 I}{2R}}[\left(1+\frac{(x-a/2)^2}{R^2}\right)^{-3/2} + \left(1+
+	,\label{biot} 
+\end{equation}
+
+\begin{equation}
+	B_x(x) = {\frac{N \mu_0 I}{2R}}(1-{\frac{x^2}{R^2})^{-3/2}}
+	,\label{biot}
+\end{equation}
+
+
+\end{document}
